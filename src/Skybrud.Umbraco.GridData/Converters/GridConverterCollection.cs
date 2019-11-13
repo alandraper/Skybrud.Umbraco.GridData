@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Skybrud.Umbraco.GridData.Converters.Umbraco;
 using Skybrud.Umbraco.GridData.Interfaces;
+using Umbraco.Core.Composing;
 
 namespace Skybrud.Umbraco.GridData.Converters {
 
@@ -10,13 +12,29 @@ namespace Skybrud.Umbraco.GridData.Converters {
     /// Collection of <see cref="IGridConverter"/>.
     /// </summary>
     public class GridConverterCollection : IEnumerable<IGridConverter> {
+        /// <summary>
+        /// Look through the TypeLoader and find types implementing IGridConverter
+        /// </summary>
+        public class ConverterFinder : IUserComposer {
+            /// <summary>
+            /// Look through the TypeLoader and find types implementing IGridConverter
+            /// </summary>
+            public void Compose(Composition composition) {
+                foreach(var type in composition.TypeLoader.GetTypes<IGridConverter>()) {
+                    try {
+                        var converter = Activator.CreateInstance(type) as IGridConverter;
+                        _converters.Add(converter);
+                    }
+                    catch(ApplicationException err) {
+                        composition.Logger.Error(GetType(), err, "Cannot create IGridConverter {Type}", type.FullName);
+                    }
+                }
+            }
+        }
 
         #region Private fields
+        private static List<IGridConverter> _converters = new List<IGridConverter>();
 
-        private readonly List<IGridConverter> _converters = new List<IGridConverter> {
-            new UmbracoGridConverter()
-        };
-        
         #endregion
 
         #region Properties
