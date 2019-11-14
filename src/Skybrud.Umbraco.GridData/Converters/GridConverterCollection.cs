@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Skybrud.Umbraco.GridData.Converters.Umbraco;
 using Skybrud.Umbraco.GridData.Interfaces;
 using Umbraco.Core.Composing;
 

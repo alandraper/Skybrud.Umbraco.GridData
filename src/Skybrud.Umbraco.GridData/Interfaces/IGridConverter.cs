@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using Skybrud.Umbraco.GridData.Rendering;
+using Umbraco.Core.Composing;
 
 namespace Skybrud.Umbraco.GridData.Interfaces {
 
     /// <summary>
     /// Interface describing a Grid converter.
     /// </summary>
-    public interface IGridConverter {
+    public interface IGridConverter : IDiscoverable {
 
         /// <summary>
         /// Converts the specified <paramref name="token"/> into an instance of <see cref="IGridControlValue"/>.

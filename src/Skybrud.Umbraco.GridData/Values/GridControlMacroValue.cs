@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Umbraco.GridData.Converters;
 
 namespace Skybrud.Umbraco.GridData.Values {
 
     /// <summary>
     /// Class representing the macro value of a control.
     /// </summary>
+    [GridConverter("macro")]
     public class GridControlMacroValue : GridControlValueBase {
 
         /// <summary>
@@ -39,30 +41,19 @@ namespace Skybrud.Umbraco.GridData.Values {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="obj"/>.
+        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="jObject"/>.
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
-        /// <param name="obj">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        protected GridControlMacroValue(GridControl control, JObject obj) : base(control, obj) {
-            Syntax = obj.GetString("syntax");
-            MacroAlias = obj.GetString("macroAlias");
-            Parameters = obj.GetObject("macroParamsDictionary").ToObject<Dictionary<string, object>>();
+        /// <param name="jObject">An instance of <see cref="JObject"/> representing the value of the control.</param>
+        public GridControlMacroValue(GridControl control, JObject jObject) : base(control, jObject) {
+            Syntax = jObject.GetString("syntax");
+            MacroAlias = jObject.GetString("macroAlias");
+            Parameters = jObject.GetObject("macroParamsDictionary").ToObject<Dictionary<string, object>>();
         }
 
         #endregion
 
-        #region Static methods
-
-        /// <summary>
-        /// Gets a macro value from the specified <paramref name="control"/> and <paramref name="obj"/>.
-        /// </summary>
-        /// <param name="control">The parent control.</param>
-        /// <param name="obj">The instance of <see cref="JObject"/> to be parsed.</param>
-        public static GridControlMacroValue Parse(GridControl control, JObject obj) {
-            return obj == null ? null : new GridControlMacroValue(control, obj);
-        }
-
-        #endregion
+        
         
     }
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Skybrud.Umbraco.GridData.Interfaces {
 
@@ -26,5 +27,4 @@ namespace Skybrud.Umbraco.GridData.Interfaces {
         string GetSearchableText();
 
     }
-
 }

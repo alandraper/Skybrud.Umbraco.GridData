@@ -2,12 +2,15 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Umbraco.GridData.Config;
+using Skybrud.Umbraco.GridData.Converters;
 
 namespace Skybrud.Umbraco.GridData.Values {
 
     /// <summary>
     /// Class representing the media value of a control.
     /// </summary>
+    [GridConverter("media", typeof(GridEditorMediaConfig))]
     public class GridControlMediaValue : GridControlValueBase {
 
         #region Properties
@@ -70,7 +73,7 @@ namespace Skybrud.Umbraco.GridData.Values {
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
         /// <param name="obj">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        protected GridControlMediaValue(GridControl control, JObject obj) : base(control, obj) {
+        public GridControlMediaValue(GridControl control, JObject obj) : base(control, obj) {
             FocalPoint = obj.GetObject("focalPoint", GridControlMediaFocalPoint.Parse);
             Id = obj.GetInt32("id");
             Image = obj.GetString("image");
@@ -80,18 +83,7 @@ namespace Skybrud.Umbraco.GridData.Values {
 
         #endregion
 
-        #region Static methods
-
-        /// <summary>
-        /// Gets a media value from the specified <paramref name="control"/> and <paramref name="obj"/>.
-        /// </summary>
-        /// <param name="control">The parent control.</param>
-        /// <param name="obj">The instance of <see cref="JObject"/> to be parsed.</param>
-        public static GridControlMediaValue Parse(GridControl control, JObject obj) {
-            return obj == null ? null : new GridControlMediaValue(control, obj);
-        }
-
-        #endregion
+        
 
     }
 

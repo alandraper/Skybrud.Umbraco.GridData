@@ -16,7 +16,7 @@ namespace Skybrud.Umbraco.GridData.Json.Converters {
         /// <param name="value">The value.</param>
         /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            TextGridControlValue text = value as TextGridControlValue;
+            var text = value as GridControlTextValue;
             if (text != null) {
                 writer.WriteValue(text.Value);
                 return;
