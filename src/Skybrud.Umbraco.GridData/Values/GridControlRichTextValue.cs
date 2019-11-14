@@ -19,7 +19,8 @@ namespace Skybrud.Umbraco.GridData.Values {
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
         /// <param name="jObject">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        protected GridControlRichTextValue(GridControl control, JObject jObject) : base(control, jObject) { }
+        public GridControlRichTextValue(GridControl control, JObject jObject) : base(control, jObject) { 
+        }
 
         #endregion
 

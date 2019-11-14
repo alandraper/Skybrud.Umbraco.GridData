@@ -14,7 +14,7 @@ namespace Skybrud.Umbraco.GridData.Converters {
         /// <summary>
         /// Look through the TypeLoader and find types implementing IGridConverter
         /// </summary>
-        public class ConverterFinder : IUserComposer {
+        public class ConverterLoader : IUserComposer {
             /// <summary>
             /// Look through the TypeLoader and find types implementing IGridConverter
             /// </summary>

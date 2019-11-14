@@ -14,6 +14,8 @@ using Skybrud.Umbraco.GridData.Json;
 using Skybrud.Umbraco.GridData.Rendering;
 using Umbraco.Core.Configuration;
 using Umbraco.Core.Logging;
+using Umbraco.Web;
+using Umbraco.Web.Composing;
 
 namespace Skybrud.Umbraco.GridData {
 
@@ -75,7 +77,6 @@ namespace Skybrud.Umbraco.GridData {
         /// </summary>
         [JsonIgnore]
         public bool IsValid => Value != null && Value.IsValid;
-
         #endregion
 
         #region Constructors
@@ -301,15 +302,15 @@ namespace Skybrud.Umbraco.GridData {
             control.Editor = obj.GetObject("editor", x => GridEditor.Parse(control, x));
 
             // Parse the control value
-            JToken value = obj.GetValue("value");
-            foreach (IGridConverter converter in GridContext.Current.Converters) {
+            var value = obj.GetValue("value");
+            foreach (var converter in GridContext.Current.Converters) {
                 try {
-                    IGridControlValue converted;
-                    if (!converter.ConvertControlValue(control, value, out converted)) continue;
-                    control.Value = converted;
-                    break;
+                    if (converter.ConvertControlValue(control, value, out var converted)) {
+                        control.Value = converted;
+                        break;
+                    }                    
                 } catch (Exception ex) {
-                    global::Umbraco.Core.Composing.Current.Logger.Error<GridControl>(ex, "Converter of type " + converter + " failed for ConvertControlValue()");
+                    Current.Logger.Error<GridControl>(ex, "Converter of type " + converter + " failed for ConvertControlValue()");
                 }
             }
             

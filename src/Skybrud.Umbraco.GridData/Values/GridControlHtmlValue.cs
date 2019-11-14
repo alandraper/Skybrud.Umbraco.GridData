@@ -34,7 +34,7 @@ namespace Skybrud.Umbraco.GridData.Values {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="token"/>.
+        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="jObject"/>.
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
         /// <param name="jObject">An instance of <see cref="JObject"/> representing the value of the control.</param>

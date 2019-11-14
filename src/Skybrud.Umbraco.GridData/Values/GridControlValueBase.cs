@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 using Skybrud.Umbraco.GridData.Interfaces;
 using Skybrud.Umbraco.GridData.Json;
 using System;
+using Umbraco.Web.Composing;
+using Umbraco.Web;
 
 namespace Skybrud.Umbraco.GridData.Values {
     
@@ -25,6 +27,16 @@ namespace Skybrud.Umbraco.GridData.Values {
         [JsonIgnore]
         public virtual bool IsValid => true;
 
+
+        /// <summary>
+        /// shortcut for the UmbracoContext
+        /// </summary>
+        public UmbracoContext UmbracoContext => Current.UmbracoContext;
+
+        /// <summary>
+        /// Shortcut for the UmbracoHelper
+        /// </summary>
+        public UmbracoHelper Umbraco => Current.UmbracoHelper;
         #endregion
 
         #region Constructors
