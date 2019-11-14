@@ -8,7 +8,6 @@ using Newtonsoft.Json.Linq;
 
 using Skybrud.Umbraco.GridData.Interfaces;
 using Skybrud.Umbraco.GridData.Rendering;
-
 using Umbraco.Core.Composing;
 
 namespace Skybrud.Umbraco.GridData.Converters {
@@ -25,9 +24,10 @@ namespace Skybrud.Umbraco.GridData.Converters {
         public void Compose(Composition composition) {
             new AutoGridTypeLoader(composition.TypeLoader).ReadTypes(types, configTypes, wrapperFuncs);
         }
-        readonly Dictionary<string, Type> types = new Dictionary<string, Type>();
-        readonly Dictionary<string, Type> configTypes = new Dictionary<string, Type>();
-        readonly Dictionary<string, Func<GridControl, GridControlWrapper>> wrapperFuncs = new Dictionary<string, Func<GridControl, GridControlWrapper>>();
+
+        static readonly Dictionary<string, Type> types = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> configTypes = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Func<GridControl, GridControlWrapper>> wrapperFuncs = new Dictionary<string, Func<GridControl, GridControlWrapper>>();
 
         /// <inheritdoc />
         public bool ConvertControlValue(GridControl control, JToken token, out IGridControlValue value) {
