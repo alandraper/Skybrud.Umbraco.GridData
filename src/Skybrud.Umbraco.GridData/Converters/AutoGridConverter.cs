@@ -32,14 +32,14 @@ namespace Skybrud.Umbraco.GridData.Converters {
         /// <inheritdoc />
         public bool ConvertControlValue(GridControl control, JToken token, out IGridControlValue value) {
             value = types.ContainsKey(control.Editor.Alias)
-                ? (IGridControlValue) Activator.CreateInstance(types[control.Editor.Alias], control, token as JObject)
+                ? (IGridControlValue) Activator.CreateInstance(types[control.Editor.Alias], control, token)
                 : null;
             return value != null;
         }
         /// <inheritdoc />
         public bool ConvertEditorConfig(GridEditor editor, JToken token, out IGridEditorConfig config) {
             config = configTypes.ContainsKey(editor.Alias)
-                ? (IGridEditorConfig)Activator.CreateInstance(types[editor.Alias], editor, token as JObject)
+                ? (IGridEditorConfig)Activator.CreateInstance(types[editor.Alias], editor, token)
                 : null;
             return config != null;
         }

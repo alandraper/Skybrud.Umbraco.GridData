@@ -31,7 +31,7 @@ namespace Skybrud.Umbraco.GridData.Values {
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="obj"/>.
         /// </summary>
-        /// <param name="obj">An instance of <see cref="JObject"/> representing the the focal point.</param>
+        /// <param name="obj">An instance of <see cref="JToken"/> representing the the focal point.</param>
         protected GridControlMediaFocalPoint(JObject obj) : base(obj) {
             Left = obj.GetFloat("left");
             Top = obj.GetFloat("top");
@@ -44,7 +44,7 @@ namespace Skybrud.Umbraco.GridData.Values {
         /// <summary>
         /// Gets a focal point from the specified <paramref name="obj"/>.
         /// </summary>
-        /// <param name="obj">The instance of <see cref="JObject"/> to be parsed.</param>
+        /// <param name="obj">The instance of <see cref="JToken"/> to be parsed.</param>
         public static GridControlMediaFocalPoint Parse(JObject obj) {
             return obj == null ? null : new GridControlMediaFocalPoint(obj);
         }

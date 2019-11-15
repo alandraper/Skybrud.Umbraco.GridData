@@ -11,7 +11,7 @@ namespace Skybrud.Umbraco.GridData.Values {
     /// Class representing the macro value of a control.
     /// </summary>
     [GridConverter("macro")]
-    public class GridControlMacroValue : GridControlValueBase {
+    public class GridControlMacroValue : GridControlObjectBase {
 
         /// <summary>
         /// Gets the syntax of the macro.
@@ -39,22 +39,17 @@ namespace Skybrud.Umbraco.GridData.Values {
         public override bool IsValid => !String.IsNullOrWhiteSpace(MacroAlias);
 
         #region Constructors
-
         /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="jObject"/>.
+        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="token"/>.
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
-        /// <param name="jObject">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        public GridControlMacroValue(GridControl control, JObject jObject) : base(control, jObject) {
-            Syntax = jObject.GetString("syntax");
-            MacroAlias = jObject.GetString("macroAlias");
-            Parameters = jObject.GetObject("macroParamsDictionary").ToObject<Dictionary<string, object>>();
+        /// <param name="token">An instance of <see cref="JToken"/> representing the value of the control.</param>
+        public GridControlMacroValue(GridControl control, JToken token) : base(control, token) {
+            Syntax = JObject.GetString("syntax");
+            MacroAlias = JObject.GetString("macroAlias");
+            Parameters = JObject.GetObject("macroParamsDictionary").ToObject<Dictionary<string, object>>();
         }
 
         #endregion
-
-        
-        
     }
-
 }

@@ -11,7 +11,7 @@ namespace Skybrud.Umbraco.GridData.Values {
     /// Class representing the media value of a control.
     /// </summary>
     [GridConverter("media", typeof(GridEditorMediaConfig))]
-    public class GridControlMediaValue : GridControlValueBase {
+    public class GridControlMediaValue : GridControlObjectBase {
 
         #region Properties
 
@@ -69,16 +69,16 @@ namespace Skybrud.Umbraco.GridData.Values {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="obj"/>.
+        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="token"/>.
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
-        /// <param name="obj">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        public GridControlMediaValue(GridControl control, JObject obj) : base(control, obj) {
-            FocalPoint = obj.GetObject("focalPoint", GridControlMediaFocalPoint.Parse);
-            Id = obj.GetInt32("id");
-            Image = obj.GetString("image");
-            AlternativeText = obj.GetString("altText");
-            Caption = obj.GetString("caption");
+        /// <param name="token">An instance of <see cref="JToken"/> representing the value of the control.</param>
+        public GridControlMediaValue(GridControl control, JToken token) : base(control, token) {
+            FocalPoint = JObject.GetObject("focalPoint", GridControlMediaFocalPoint.Parse);
+            Id = JObject.GetInt32("id");
+            Image = JObject.GetString("image");
+            AlternativeText = JObject.GetString("altText");
+            Caption = JObject.GetString("caption");
         }
 
         #endregion

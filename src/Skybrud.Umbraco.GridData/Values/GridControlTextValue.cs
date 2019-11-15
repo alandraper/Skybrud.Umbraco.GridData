@@ -13,7 +13,7 @@ namespace Skybrud.Umbraco.GridData.Values {
     /// </summary>
     [JsonConverter(typeof(GridControlValueStringConverter))]
     [GridConverter("textstring", typeof(GridEditorTextConfig))]
-    public class GridControlTextValue : GridControlValueBase {
+    public class GridControlTextValue : GridControlBase {
 
         #region Properties
 
@@ -33,12 +33,12 @@ namespace Skybrud.Umbraco.GridData.Values {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="jObject"/>.
+        /// Initializes a new instance based on the specified <paramref name="control"/> and <paramref name="token"/>.
         /// </summary>
         /// <param name="control">An instance of <see cref="GridControl"/> representing the control.</param>
-        /// <param name="jObject">An instance of <see cref="JObject"/> representing the value of the control.</param>
-        public GridControlTextValue(GridControl control, JObject jObject) : base(control, jObject){
-            Value = jObject.Value<string>() + "";
+        /// <param name="token">An instance of <see cref="JToken"/> representing the value of the control.</param>
+        public GridControlTextValue(GridControl control, JToken token) : base(control, token){
+            Value = token.Value<string>() + "";
         }
 
         #endregion

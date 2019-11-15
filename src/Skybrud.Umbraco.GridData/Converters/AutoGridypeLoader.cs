@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
+
 using Newtonsoft.Json.Linq;
+
 using Skybrud.Umbraco.GridData.Interfaces;
 using Skybrud.Umbraco.GridData.Rendering;
+
 using Umbraco.Core.Composing;
 
 namespace Skybrud.Umbraco.GridData.Converters {
     internal class AutoGridTypeLoader {
         private TypeLoader TypeLoader { get; }
+        private Type GridControlType = typeof(GridControl);
+        private Type[] ConstructorArgs = new Type[] { typeof(GridControl), typeof(JToken) };
 
         public AutoGridTypeLoader(TypeLoader typeLoader) {
             this.TypeLoader = typeLoader;
         }
-        private Type GridControlType = typeof(GridControl);
-        
+
+
         /// <summary>
         /// this will be the function control.GetControlWrapper&lt;TValue&gt;() where TValue : IGridControlValue
         /// </summary>
@@ -29,8 +34,8 @@ namespace Skybrud.Umbraco.GridData.Converters {
 
         void InitWrapperMethods() {
             foreach (var method in GridControlType.GetMethods().Where(m => m.IsGenericMethod && m.Name == "GetControlWrapper")) {
-                var typeParams = method.GetGenericArguments();                
-                if (typeParams.Length == 1 ){
+                var typeParams = method.GetGenericArguments();
+                if (typeParams.Length == 1) {
                     CreateWrapperWithoutConfig = method; // todo can we typecheck here?
                 }
                 else if (typeParams.Length == 2) {
@@ -47,17 +52,17 @@ namespace Skybrud.Umbraco.GridData.Converters {
 
             InitWrapperMethods();
 
-            var constructorArgs = new Type[] { GridControlType, typeof(JObject) };
+
 
             foreach (var type in TypeLoader.GetAttributedTypes<GridConverterAttribute>()) {
                 var attr = type.GetCustomAttribute<GridConverterAttribute>();
                 Contract.Assert(typeof(IGridControlValue).IsAssignableFrom(type), $"Type {type.FullName} with GridConverterAttribute {attr.EditorAlias} must implement IGridControlValue");
 
-                Contract.Assert(type.GetConstructor(constructorArgs) != null, "GridControlValue should have a constructor matching ");
+                Contract.Assert(type.GetConstructor(ConstructorArgs) != null, "GridControlValue should have a constructor matching ");
 
-                types[attr.EditorAlias] = type;         
+                types[attr.EditorAlias] = type;
                 configTypes[attr.EditorAlias] = attr.ConfigType; // this might be null
-                wrapperFuncs[attr.EditorAlias] = 
+                wrapperFuncs[attr.EditorAlias] =
                     (GridControl gridControl) => GetWrapperMethod(type, attr.ConfigType).Invoke(gridControl, Type.EmptyTypes) as GridControlWrapper;
             }
         }
